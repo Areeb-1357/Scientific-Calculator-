@@ -28,6 +28,29 @@ function formatNumber(value) {
   return String(Number(value.toFixed(10)));
 }
 
+function calculateResult(first, operator, second) {
+  if (operator === "+") return first + second;
+  if (operator === "-") return first - second;
+  if (operator === "*") return first * second;
+  if (operator === "/") {
+    if (second === 0) throw new Error("Cannot divide by zero.");
+    return first / second;
+  }
+  if (operator === "^") return first ** second;
+  throw new Error("Unsupported operator.");
+}
+
+function calculateFunctionResult(name, value) {
+  const argument = ["sin", "cos", "tan"].includes(name) && angleMode === "DEG"
+    ? value * Math.PI / 180
+    : value;
+  if (["sin", "cos", "tan"].includes(name)) return Math[name](argument);
+  if (name === "log" && value > 0) return Math.log10(value);
+  if (name === "ln" && value > 0) return Math.log(value);
+  if (name === "sqrt" && value >= 0) return Math.sqrt(value);
+  throw new Error("Value is outside the function domain.");
+}
+
 function inputNumber(number) {
   if (waitingForOperand || currentValue === "Error") {
     currentValue = number;
@@ -56,19 +79,12 @@ function chooseOperator(operator) {
   updateDisplay();
 }
 
-async function calculate(addToHistory = true) {
+function calculate(addToHistory = true) {
   if (pendingOperator === null || storedValue === null) return;
   const first = storedValue;
   const second = Number(currentValue);
   try {
-    const response = await fetch("/api/calculate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ operation: "binary", first, operator: pendingOperator, second })
-    });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "Calculation failed.");
-    const result = Number(payload.result);
+    const result = calculateResult(first, pendingOperator, second);
     currentValue = formatNumber(result);
     if (addToHistory) addHistory(`${formatNumber(first)} ${pendingOperator} ${formatNumber(second)}`, currentValue);
   } catch (error) {
@@ -81,17 +97,10 @@ async function calculate(addToHistory = true) {
   updateDisplay();
 }
 
-async function applyFunction(name) {
+function applyFunction(name) {
   const input = Number(currentValue);
   try {
-    const response = await fetch("/api/calculate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ operation: "function", name, value: input, angleMode })
-    });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || "Calculation failed.");
-    const output = formatNumber(Number(payload.result));
+    const output = formatNumber(calculateFunctionResult(name, input));
     addHistory(`${name}(${formatNumber(input)})`, output);
     currentValue = output;
   } catch (error) {
