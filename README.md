@@ -1,46 +1,45 @@
 # Scientific Calculator
 
-A browser-based scientific calculator with degree/radian modes, memory controls, and calculation history.
+A clean, browser-based scientific calculator for everyday arithmetic and common scientific operations. It is fast, responsive, and ready to use without downloads, installations, or accounts.
 
-The calculator runs entirely in the browser, so it can be hosted on GitHub Pages without Python.
+## Live Calculator
 
-## Open on GitHub Pages
+Use the calculator here:
 
-1. Push the project to a GitHub repository.
-2. On GitHub, open **Settings > Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select the `main` branch and the `/ (root)` folder, then choose **Save**.
-5. Open the Pages URL GitHub provides, usually:
-
-   ```text
-   https://<your-github-username>.github.io/<repository-name>/
-   ```
-
-Share that URL with users. They only need a modern web browser.
-
-## Run locally
-
-To test the static version locally, open `index.html` in a browser. Python is optional. To use the included Python server instead:
-
-1. Install Python 3.8 or newer.
-2. Open a terminal in this project folder.
-3. Start the calculator server:
-
-   ```powershell
-   python main.py
-   ```
-
-4. Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in a browser.
-
-Keep the terminal running while using the calculator. Press `Ctrl+C` in the terminal to stop the server.
+[Open Scientific Calculator](https://areeb-1357.github.io/Scientific-Calculator-/)
 
 ## Features
 
-- Addition, subtraction, multiplication, division, and powers
-- `sin`, `cos`, `tan`, `log`, `ln`, and square root
-- Degree and radian angle modes
-- Constants `pi` and `e`
-- Memory controls and recent calculation history
-- Keyboard input, including `Enter`, `Escape`, and `Backspace`
+- Basic arithmetic: addition, subtraction, multiplication, and division
+- Exponents and powers
+- Trigonometric functions: `sin`, `cos`, and `tan`
+- Logarithmic functions: `log` and natural logarithm `ln`
+- Square root calculations
+- Degree and radian angle modes for trigonometry
+- Mathematical constants: `pi` and `e`
+- Memory functions: clear memory, recall memory, and add to memory
+- Calculation history with the six most recent results
+- Number formatting to up to 10 decimal places
+- Error handling for invalid operations and unsupported values
+- Keyboard input support
 
-The Python server is retained as an optional alternative for local use. It is not required by the browser calculator.
+## Using the Calculator
+
+Enter numbers with the on-screen keypad or your keyboard. Choose an operator, enter the next number, and select `=` or press `Enter` to calculate the result.
+
+Use `DEG` for degree-based trigonometry or `RAD` for radian-based trigonometry. The `AC` button clears the current calculation, while `⌫` removes the last digit.
+
+Keyboard shortcuts include:
+
+- Number keys `0` through `9`
+- `.`, `+`, `-`, `*`, `/`, and `^`
+- `Enter` or `=` to calculate
+- `Escape` to clear
+- `Backspace` to delete the last digit
+
+## Technology
+
+- HTML for the calculator structure
+- CSS for the responsive interface
+- JavaScript for all calculations and interactions
+- Optional Python server included in `main.py`
